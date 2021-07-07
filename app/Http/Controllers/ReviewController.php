@@ -48,9 +48,15 @@ class ReviewController extends Controller
 
                 return response()->json($responseArray,400);
             }
-            $user = User::find($id);
+
+            $user = User::find($request->userid);
             if($user == null){
                 return response()->json(['success'=>false , 'message'=> 'User Error' , 'error'=> 'User Id Not Exist'],400);
+            }
+
+            $resto = Restaurant::find($id);
+            if($resto == null) {
+                return response()->json(['success'=>false , 'message'=> 'Restaurant Error' , 'error'=> 'Restaurant with that Id does Not Exist'],400);
             }
 
             $input = $request->all();
