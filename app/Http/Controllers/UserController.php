@@ -121,9 +121,15 @@ class UserController extends Controller
             return response()->json(['success'=>false , 'message'=> 'Validation Error' , 'error'=> 'Must input at least one field'],400);
         }else{
             $user = User::find($id);
+            
             if($user == null){
                 return response()->json(['success'=>false , 'message'=> 'User Error' , 'error'=> 'User Id Not Exist'],400);
             }
+
+            if (Auth::user()->id != $id) {
+                return response()->json(['success'=>false , 'message'=> 'User Error' , 'error'=> 'Id passed must be equals to the current logged-in user id to be updated'],400);
+            }
+
             $user->update($data);
             $user->save();
             return response()->json(['success'=>true , 'message'=> 'success', 'data'=>$user],200);
@@ -135,6 +141,9 @@ class UserController extends Controller
         $user = User::find($id);
         if($user == null){
             return response()->json(['success'=>false , 'message'=> 'User Error' , 'error'=> 'User Id Not Exist'],400);
+        }
+        if (Auth::user()->id != $id) {
+            return response()->json(['success'=>false , 'message'=> 'User Error' , 'error'=> 'Id passed must be equals to the current logged-in user id to be deleted'],400);
         }
         $user->delete();
         return response()->json(['success'=>true , 'message'=> 'success', 'data'=>$user],200);

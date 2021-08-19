@@ -29,6 +29,14 @@ class RestaurantTableSeeder extends Seeder
         $resto1->phone = '02177898898';
 
         $resto1->save();
+
+        $resto2 = new Restaurant();
+        $resto2->name = 'Bebek Tepi Got';
+        $resto2->description = 'Makan di tepi Got hanya di Bebek Tepi Got';
+        $resto2->address = 'Jalan Bebek';
+        $resto2->phone = '02177898222';
+
+        $resto2->save();
     }
 
 }
